@@ -2,42 +2,15 @@ package main
 
 import (
 	"fmt"
-
-	mWarehouse "superapp/warehouse_rack/internal/model"
+	"os"
 )
 
 func main() {
-
-	//init model
-	nData := 3
-	tempModel := make(map[int]mWarehouse.WarehouseRackData, nData)
-
-	tempModel[1] = mWarehouse.WarehouseRackData{
-		SlotNo:      1,
-		SKU:         "sku",
-		ExpiredData: "xxx",
-	}
-
-	tempModel[2] = mWarehouse.WarehouseRackData{
-		SlotNo:      2,
-		SKU:         "2sku",
-		ExpiredData: "2xxx",
-	}
-
-	tempModel[3] = mWarehouse.WarehouseRackData{
-		SlotNo:      3,
-		SKU:         "3sku",
-		ExpiredData: "4xxx",
-	}
-
-	for x, y := range tempModel {
-		fmt.Println("x,y : ", x, y)
-
-		if x >= nData {
-			break
+	if len(os.Args) > 1 {
+		file, err := os.Open(os.Args[1])
+		if err != nil {
+			fmt.Println("Error opening file:", err)
+			return
 		}
-
 	}
-	fmt.Println("tempModel : ", tempModel)
-
 }
