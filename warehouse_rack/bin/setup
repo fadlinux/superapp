@@ -5,3 +5,14 @@
 #
 # After this is run, bin/warehouse_rack
 # should Just Work.
+
+#run dependencies
+go mod tidy
+go mod vendor
+
+#run Test
+go test ./test/rack_test.go 
+
+#run golang binary
+./warehouse_rack 
+
