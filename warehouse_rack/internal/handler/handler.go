@@ -56,6 +56,26 @@ func NewWarehouseHandler(input *os.File) {
 				fmt.Printf("Allocated slot number: %d\n", slot)
 			}
 
+		case "rack_out":
+
+			if len(parts) != 2 || w == nil {
+				fmt.Println("Invalid input")
+				continue
+			}
+
+			slot, err := strconv.Atoi(parts[1])
+			if err != nil {
+				fmt.Println("Invalid slot number")
+				continue
+			}
+			err = usecase.RemoveRack(slot)
+
+			if err != nil {
+				fmt.Println(err.Error())
+			} else {
+				fmt.Printf("Slot number %d is free\n", slot)
+			}
+
 		default:
 			fmt.Println("Invalid command")
 		}
