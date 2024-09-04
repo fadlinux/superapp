@@ -4,6 +4,8 @@ import (
 	"errors"
 	"fadlinux/superapp/warehouse_rack/internal/model"
 	"fadlinux/superapp/warehouse_rack/internal/repository"
+	"fmt"
+	"strings"
 )
 
 type WarehouseUsecase struct {
@@ -32,4 +34,15 @@ func (uc *WarehouseUsecase) RemoveRack(slotNo int) error {
 		return nil
 	}
 	return errors.New("slot is empty")
+}
+
+func (uc *WarehouseUsecase) PrintStatus() string {
+	var result []string
+	for i, occupied := range uc.repo.Slots {
+		if occupied == 1 {
+			product := uc.repo.Products[i+1]
+			result = append(result, fmt.Sprintf("%d %s %s", product.SlotNo, product.SKU, product.ExpDate))
+		}
+	}
+	return strings.Join(result, "\n\n")
 }
