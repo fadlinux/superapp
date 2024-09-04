@@ -16,5 +16,7 @@ func main() {
 		}
 		defer file.Close()
 		handler.NewWarehouseHandler(file)
+	} else {
+		handler.NewWarehouseHandler(os.Stdin)
 	}
 }
