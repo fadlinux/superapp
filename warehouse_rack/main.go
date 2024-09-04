@@ -3,6 +3,8 @@ package main
 import (
 	"fmt"
 	"os"
+
+	"fadlinux/superapp/warehouse_rack/internal/handler"
 )
 
 func main() {
@@ -12,5 +14,7 @@ func main() {
 			fmt.Println("Error opening file:", err)
 			return
 		}
+		defer file.Close()
+		handler.NewWarehouseHandler(file)
 	}
 }
