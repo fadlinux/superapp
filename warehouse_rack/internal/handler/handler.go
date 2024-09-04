@@ -76,6 +76,51 @@ func NewWarehouseHandler(input *os.File) {
 				fmt.Printf("Slot number %d is free\n", slot)
 			}
 
+		case "sku_numbers_for_product_with_exp_date":
+			if len(parts) != 2 || w == nil {
+				fmt.Println("Invalid input")
+				continue
+			}
+
+			skus, err := usecase.SKUForExpDate(parts[1])
+
+			if err != nil {
+				fmt.Println(err.Error())
+			} else {
+				fmt.Println(strings.Join(skus, ", "))
+			}
+
+		case "slot_numbers_for_product_with_exp_date":
+			if len(parts) != 2 || w == nil {
+				fmt.Println("Invalid input")
+				continue
+			}
+
+			slots, err := usecase.SlotNoForExpDate(parts[1])
+
+			if err != nil {
+				fmt.Println(err.Error())
+			} else {
+				fmt.Println(strings.Join(strings.Fields(fmt.Sprint(slots)), ", "))
+			}
+
+		case "slot_number_for_sku_number":
+			if len(parts) != 2 || w == nil {
+				fmt.Println("Invalid input")
+				continue
+			}
+
+			slot, err := usecase.SlotNoForSKU(parts[1])
+
+			if err != nil {
+				fmt.Println(err.Error())
+			} else {
+				fmt.Println(slot)
+			}
+
+		case "exit":
+			return
+
 		default:
 			fmt.Println("Invalid command")
 		}

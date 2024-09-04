@@ -5,6 +5,7 @@ import (
 	"fadlinux/superapp/warehouse_rack/internal/model"
 	"fadlinux/superapp/warehouse_rack/internal/repository"
 	"fmt"
+	"sort"
 	"strings"
 )
 
@@ -45,4 +46,35 @@ func (uc *WarehouseUsecase) PrintStatus() string {
 		}
 	}
 	return strings.Join(result, "\n\n")
+}
+
+func (uc *WarehouseUsecase) SKUForExpDate(expDate string) ([]string, error) {
+	var skus []string
+	for _, product := range uc.repo.Products {
+		if product.ExpDate == expDate {
+			skus = append(skus, product.SKU)
+		}
+	}
+	sort.Strings(skus)
+	return skus, nil
+}
+
+func (uc *WarehouseUsecase) SlotNoForExpDate(expDate string) ([]int, error) {
+	var slots []int
+	for _, product := range uc.repo.Products {
+		if product.ExpDate == expDate {
+			slots = append(slots, product.SlotNo)
+		}
+	}
+	sort.Ints(slots)
+	return slots, nil
+}
+
+func (uc *WarehouseUsecase) SlotNoForSKU(sku string) (int, error) {
+	for _, product := range uc.repo.Products {
+		if product.SKU == sku {
+			return product.SlotNo, nil
+		}
+	}
+	return 0, errors.New("not found")
 }
