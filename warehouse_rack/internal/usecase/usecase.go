@@ -24,3 +24,12 @@ func (uc *WarehouseUsecase) CreateRack(sku string, expDate string) (int, error) 
 	}
 	return 0, errors.New("rack is full")
 }
+
+func (uc *WarehouseUsecase) RemoveRack(slotNo int) error {
+	if _, ok := uc.repo.Products[slotNo]; ok {
+		delete(uc.repo.Products, slotNo)
+		uc.repo.Slots[slotNo-1] = 0
+		return nil
+	}
+	return errors.New("slot is empty")
+}

@@ -42,6 +42,20 @@ func NewWarehouseHandler(input *os.File) {
 
 			fmt.Printf("Created a warehouse rack with %d slots\n", size)
 
+		case "rack":
+			if len(parts) != 3 || w == nil {
+				fmt.Println("Invalid input")
+				continue
+			}
+
+			slot, err := usecase.CreateRack(parts[1], parts[2])
+
+			if err != nil {
+				fmt.Println(err.Error())
+			} else {
+				fmt.Printf("Allocated slot number: %d\n", slot)
+			}
+
 		default:
 			fmt.Println("Invalid command")
 		}
