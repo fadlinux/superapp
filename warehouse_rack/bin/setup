@@ -14,5 +14,5 @@ go mod vendor
 go test ./test/rack_test.go 
 
 #run golang binary
-./warehouse_rack 
+./warehouse_rack
 
