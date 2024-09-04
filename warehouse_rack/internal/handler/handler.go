@@ -6,6 +6,7 @@ import (
 	usecases "fadlinux/superapp/warehouse_rack/internal/usecase"
 	"fmt"
 	"os"
+	"strconv"
 	"strings"
 )
 
@@ -20,6 +21,26 @@ func NewWarehouseHandler(input *os.File) {
 		command := parts[0]
 
 		switch command {
+
+		case "create_warehouse_rack":
+			if len(parts) != 2 {
+				fmt.Println("Invalid input")
+				continue
+			}
+
+			size, err := strconv.Atoi(parts[1])
+			if err != nil {
+				fmt.Println("Invalid size")
+				continue
+			}
+
+			w = repository.NewWarehouseRepository(size)
+			usecase = *usecases.NewWarehouseUsecase(repository.WarehouseRepository{
+				Slots:    w.Slots,
+				Products: w.Products,
+			})
+
+			fmt.Printf("Created a warehouse rack with %d slots\n", size)
 
 		default:
 			fmt.Println("Invalid command")
