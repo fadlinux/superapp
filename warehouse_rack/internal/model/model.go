@@ -1,7 +1,12 @@
 package model
 
-type WarehouseRackData struct {
-	SlotNo      int
-	SKU         string
-	ExpiredData string
+type WarehouseData struct {
+	Slots    []int
+	Products map[int]Product
+}
+
+type Product struct {
+	SKU     string
+	ExpDate string
+	SlotNo  int
 }
